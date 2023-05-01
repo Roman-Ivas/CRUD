@@ -7,13 +7,15 @@ import { HeaderComponent } from './header/header.component';
 import { ListComponent } from './list/list.component';
 import { PutComponent } from './put/put.component';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule} from '@angular/common/http';
+import { CreateComponent } from './create/create.component'
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ListComponent,
-    PutComponent
+    PutComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,

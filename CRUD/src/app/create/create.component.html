@@ -1,0 +1,12 @@
+<h2>Adding New User</h2>
+<div class="row w-25">
+  <div class="mb-3">
+    <label class="form-label" for="name">Name:</label>
+    <input class="form-control" type="text" [(ngModel)]="user.name">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="name">Name:</label>
+    <input class="form-control" type="number" [(ngModel)]="user.age">
+  </div>
+  <button (click)="submit()" class="btn btn-success">Add User</button>
+</div>

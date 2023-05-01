@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
+import { NgModule, createComponent } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { PutComponent } from './put/put.component';
+import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
-  {path:"list",component:ListComponent},
-  {path:"put",component:PutComponent}
+  {path:"",component:ListComponent},
+  {path:"put",component:PutComponent},
+  {path:"create",component:CreateComponent}
 ];
 
 @NgModule({
