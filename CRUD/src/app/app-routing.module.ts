@@ -6,7 +6,7 @@ import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
   {path:"",component:ListComponent},
-  {path:"put",component:PutComponent},
+  {path:"put/:id",component:PutComponent},
   {path:"create",component:CreateComponent}
 ];
 

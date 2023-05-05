@@ -18,9 +18,12 @@ constructor(private http:HttpService){}
     })
   }
 myDelete(user:User){
-  // this.http.deleteUser(user).subscribe((data:any)=>{
-  //   window.location.reload()
-  // });
-
+  console.log(user);
+  this.http.deleteUser(user).subscribe((data:any)=>{
+    if(data.message!=="Success")
+    alert("Something's gone wrong")
+    window.location.reload();
+  });
 }
+
 }

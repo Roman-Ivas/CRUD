@@ -1,1 +1,17 @@
-<p>put works!</p>
+<ng-container *ngIf="user">
+  <div class="p-4">
+    <input type="hidden" name="id" [(ngModel)]="user.id">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="user.name">
+    </div>
+    <div class="form-group mb-3">
+      <label for="age">Age</label>
+      <input type="number" class="form-control" name="age" [(ngModel)]="user.age">
+    </div>
+    <div class="btn-group" role="group">
+      <button type="submit" class="btn btn-primary" routerLink="/" (click)="onEditSubmit()">Save</button>
+      <a class="btn btn-secondary" routerLink="/">Cancel</a>
+    </div>
+  </div>
+</ng-container>

@@ -15,7 +15,7 @@ const jsonParser=express.json();
 const port=3001;
 
 const pgp = require('pg-promise')(/* options */)
-var db=pgp("postgres://postgres:17858517qw@localhost:5432/ListDb");
+var db=pgp("postgres://postgres:pass@localhost:5432/ListDb");///!!! put yr pasword here
 
 app.use((req,resp,next)=>{
     resp.setHeader("Access-Control-Allow-Origin","*");
@@ -23,6 +23,14 @@ app.use((req,resp,next)=>{
     resp.setHeader("Access-Control-Allow-Methods","GET, POST, PUT,DELETE");
     next();
 });
+
+app.get('/user/:id',async(req,resp)=>{
+    let id=req.params.id;
+    console.log(id);
+    let user=await db.one(`SELECT * FROM public."Users" WHERE id=${id}`)
+    resp.json(user);
+})
+
 app.get("/list",jsonParser,async (req,resp)=>{
 let user=await db.any('SELECT * FROM "Users"');
 resp.json(user)
@@ -42,22 +50,33 @@ await db.none('INSERT INTO public."Users"(name,age) VALUES(${name},${age})',{
 resp.json({name:username,age:userage})
 })
 
-// app.delete('/delete/:id', async (req, res) => {
-//     const { id } = req.params;
-  
-//     try {
-//       const result = await db.result(`
-//         DELETE FROM "Users" 
-//         WHERE id = $1`,
-//         [id]
-//       );
-//       res.json({ success: true, message: `${result.rowCount} record deleted` });
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Error deleting record from database');
-//     }
-//   });
+app.delete('/delete/:id',jsonParser, async (req, resp) => {
+    let id=req.params.id;
+    let resualt=await db.one(`DELETE FROM public."Users" WHERE id=${id} returning id`);
+    resualt.message="Success";
+    console.log(resualt);
+    resp.json(resualt);
+});
 
+app.put('/put/:id',jsonParser,async (req,resp)=>{
+let id=req.params.id;
+if(!id)
+resp.sendStatus(404);
+let user=await db.one(`SELECT * FROM public."Users" WHERE id=${id}`);
+if(!user)
+resp.sendStatus(404);
+if(!req.body)
+resp.sendStatus(404);
+let username=req.body.name;
+let userage=req.body.age;
+
+await db.none('UPDATE public."Users" SET name=${name}, age=${age} WHERE id=${id}',{
+    name:username,
+    age:userage,
+    id:user.id
+})
+resp.json({message:"Update was success"});
+})
 
 app.listen(port, () => {
     console.log('Server listening on port 3000');
